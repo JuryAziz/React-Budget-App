@@ -7,20 +7,26 @@ type Expense = {
 };
 
 const Expense = () => {
-  const source = useRef<any>("");
-  const amount = useRef<any>(0);
-  const date = useRef<any>("");
+  const source = useRef<any>();
+  const amount = useRef<any>();
+  const date = useRef<any>();
 
   const [expenses, setExpense] = useState<Expense[]>([]);
 
   const addExpenseHandler = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const Expense = {
+
+    const expense = {
       source: String(source.current.value),
       amount: Number(amount.current.value),
       date: String(date.current.value),
     };
-    setExpense((expenses) => [...expenses, Expense]);
+
+    source.current.value = "";
+    amount.current.value = "";
+    date.current.value = "";
+
+    setExpense((expenses) => [...expenses, expense]);
   };
 
   return (
@@ -37,7 +43,7 @@ const Expense = () => {
 
         <div>
           <label htmlFor="expense-date"> Date of Expense </label>
-          <input id="expense-date" type="date" />
+          <input ref={date} id="expense-date" type="date" />
         </div>
 
         <button type="submit" id="add-Expense-btn">
@@ -47,7 +53,13 @@ const Expense = () => {
 
       {expenses.length > 0 && (
         <ul>
-          <li>Hi</li>
+          {expenses.map((expense) => {
+            return (
+              <li>
+                {expense.source} : {expense.amount} on {expense.date}
+              </li>
+            );
+          })}
         </ul>
       )}
     </section>

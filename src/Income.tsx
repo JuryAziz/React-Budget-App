@@ -7,19 +7,25 @@ type Income = {
 };
 
 const Income = () => {
-  const source = useRef<any>("");
-  const amount = useRef<any>(0);
-  const date = useRef<any>("");
+  let source = useRef<any>();
+  const amount = useRef<any>();
+  const date = useRef<any>();
 
   const [incomes, setIncome] = useState<Income[]>([]); // for incomes list ...
 
   const addIncomeHandler = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
+
     const income = {
       source: String(source.current.value),
       amount: Number(amount.current.value),
       date: String(date.current.value),
     };
+
+    source.current.value = "";
+    amount.current.value = "";
+    date.current.value = "";
+
     setIncome((incomes) => [...incomes, income]);
   };
 
@@ -37,7 +43,7 @@ const Income = () => {
 
         <div>
           <label htmlFor="income-date"> Date of income </label>
-          <input id="income-date" type="date" />
+          <input ref={date} id="income-date" type="date" />
         </div>
 
         <button type="submit" id="add-income-btn">
@@ -45,9 +51,17 @@ const Income = () => {
         </button>
       </form>
 
-    {incomes.length > 0 && <ul>
-      <li>Hi</li>
-    </ul>}
+      {incomes.length > 0 && (
+        <ul>
+          {incomes.map((income) => {
+            return (
+              <li>
+                {income.source} : {income.amount} on {income.date}
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </section>
   );
 };
