@@ -1,8 +1,9 @@
 import React, { FormEvent, useRef, useState } from "react";
 
-const Target = (props: { target: number }) => {
+const Target = () => {
   const [target, setTarget] = useState<any>(0);
-  props.target = target;
+
+
   //   const resetTarget = (ev: FormEvent<HTMLFormElement>) => {
   //     ev.preventDefault();
   //     setTarget(0);

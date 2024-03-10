@@ -4,11 +4,15 @@ import "./App.css";
 import Income from "./components/Income.tsx";
 import Expense from "./components/Expense.tsx";
 import Target from "./components/Target.tsx";
+import Balance from "./components/Balance.tsx";
 
-function App() {
+function App ()
+{
+  // for porps
   const [totalIncomes, setTotalIncomes] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
-  const [targetSaving, setTargetSaving] = useState(0);
+  const [ targetSaving, setTargetSaving ] = useState( 0 );
+  const [savingAmount, setSavingAmount] = useState(0);
 
   const calcBalance = ()=> {
     return(totalIncomes - totalExpenses - targetSaving);
@@ -17,7 +21,8 @@ function App() {
     <Fragment>
       <Income />
       <Expense />
-      {/* <Target /> */}
+      <Target />
+      <Balance balance={calcBalance()}/>
     </Fragment>
   );
 }
