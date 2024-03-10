@@ -7,31 +7,26 @@ type Income = {
 };
 
 const Income = () => {
+
   const [incomes, setIncomes] = useState<Income[]>([]); // for incomes list ...
   const [income, setIncome] = useState<Income>({
     source: "",
     amount: 0,
     date: "",
-  }); // for incomes list ...
+  }); // for income object ...
 
-  const onChange = (ev: FormEvent<HTMLElement>) => {
+  const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     ev.preventDefault();
 
     setIncome((income) => {
       return { ...income, [ev.target.name]: ev.target.value };
     });
-    console.log("income", income);
   };
 
-  const addIncome = (ev: FormEvent<HTMLFormElement>) => {
+  const addIncome = (ev: FormEvent<HTMLFormElement>): void => {
     ev.preventDefault();
-    console.log("inside add Income");
+
     setIncomes((incomes) => [...incomes, income]);
-    console.log("incomes", incomes);
-    // const income = {
-    //   // todo add ID
-    //   ...incomes,
-    // };
 
     setIncome({
       source: "",

@@ -7,43 +7,66 @@ type Expense = {
 };
 
 const Expense = () => {
-  const source = useRef<any>();
-  const amount = useRef<any>();
-  const date = useRef<any>();
+  const [expenses, setExpenses] = useState<Expense[]>([]); // for expenses list...
+  const [expense, setExpense] = useState<Expense>({
+    source: "",
+    amount: 0,
+    date: "",
+  }); // for expense object ...
 
-  const [expenses, setExpense] = useState<Expense[]>([]);
-
-  const addExpenseHandler = (ev: FormEvent<HTMLFormElement>) => {
+  const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     ev.preventDefault();
 
-    const expense = {
-      source: String(source.current.value),
-      amount: Number(amount.current.value),
-      date: String(date.current.value),
-    };
+    setExpense((expense) => {
+      return { ...expense, [ev.target.name]: ev.target.value };
+    });
+  };
 
-    source.current.value = "";
-    amount.current.value = "";
-    date.current.value = "";
+  const addExpense = (ev: FormEvent<HTMLFormElement>): void => {
+    ev.preventDefault();
 
-    setExpense((expenses) => [...expenses, expense]);
+    setExpenses((expenses) => [...expenses, expense]);
+
+    setExpense({
+      source: "",
+      amount: 0,
+      date: "",
+    });
   };
 
   return (
     <section>
-      <form onSubmit={addExpenseHandler}>
+      <form onSubmit={addExpense}>
         <div>
           <label htmlFor="expense-source"> Expense source </label>
-          <input ref={source} id="expense-source" type="text" />
+          <input
+            onChange={onChange}
+            value={expense.source}
+            name="source"
+            id="expense-source"
+            type="text"
+          />
         </div>
         <div>
           <label htmlFor="expense-amount"> Amount of Expense </label>
-          <input ref={amount} id="expense-amount" type="number" />
+          <input
+            onChange={onChange}
+            value={expense.amount}
+            name="amount"
+            id="expense-amount"
+            type="number"
+          />
         </div>
 
         <div>
           <label htmlFor="expense-date"> Date of Expense </label>
-          <input ref={date} id="expense-date" type="date" />
+          <input
+            onChange={onChange}
+            value={expense.date}
+            name="date"
+            id="expense-date"
+            type="date"
+          />
         </div>
 
         <button type="submit" id="add-Expense-btn">
