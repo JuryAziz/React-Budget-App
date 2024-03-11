@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
-const Target = ( props: { savingAmount: number;  }) => {
+const Target = (props: { savingAmount: number }) => {
   const [target, setTarget] = useState(0);
   const [saving, setSavings] = useState(0);
 
   useEffect(() => {
-    setSavings(props.savingAmount);
-  });
+    setSavings(saving + props.savingAmount);
+  }, [props.savingAmount] );
+
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     ev.preventDefault();
-
     setTarget(Number(ev.target.value));
   };
 
-
+  const resetTarget = (ev: FormEvent<HTMLFormElement>): void => {
+    ev.preventDefault();
+    setTarget(0);
+  };
 
   return (
     <section>
-      <form onSubmit={() => setTarget(0)}>
+      <form onSubmit={resetTarget}>
         <div>
           <label htmlFor="target"> Set target </label>
           <input value={target} onChange={onChange} id="target" type="number" />

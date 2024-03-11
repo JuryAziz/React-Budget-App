@@ -7,10 +7,9 @@ import Target from "./components/Target.tsx";
 import Balance from "./components/Balance.tsx";
 
 function App() {
-  // for porps
+  
   const [totalIncomes, setTotalIncomes] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
-  const [targetSaving, setTargetSaving] = useState(0);
   const [savingAmount, setSavingAmount] = useState(0);
 
   const getTotalIncomes = (totalIncomes: number): void => {
@@ -21,8 +20,8 @@ function App() {
     setTotalExpenses(totalExpenses);
   };
 
-  const getTargetSaving = (target: number): void => {
-    setTargetSaving(target);
+  const getSavingAmount = (savingAmount: number): void => {
+    setSavingAmount(savingAmount);
   };
 
 
@@ -31,18 +30,15 @@ function App() {
     console.log("total income", totalIncomes, "total expenses", totalExpenses, "Saving", savingAmount);
     return totalIncomes - totalExpenses - savingAmount;
   };
+
   return (
     <Fragment>
       <Income setTotalIncomes={getTotalIncomes} />
       <Expense setTotalExpenses={getTotalExpenses} />
       <Target savingAmount={savingAmount} />
-      <Balance balance={calcBalance()} transferSaving={getTargetSaving} />
+      <Balance balance={calcBalance()} transferSaving={getSavingAmount} />
     </Fragment>
   );
 }
 
 export default App;
-
-/*
- ? get Income - Expense - Saving = Balance
- */
