@@ -1,18 +1,25 @@
 
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
-const Balance = (props: { balance: number }) => {
+const Balance = (props: {
+  balance: number;
+  transferSaving: (amount: number) => void;
+}) => {
   const [savingAmount, setSavingAmount] = useState(0);
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     setSavingAmount(Number(ev.target.value));
-    };
-    
+  };
+
+  const setSaving = (ev: FormEvent<HTMLFormElement>): void => {
+      ev.preventDefault();
+      props.transferSaving(savingAmount);
+  };
   return (
     <section>
       <div>Current Balance: {props.balance}</div>
-      <form /*onSubmit={  transfer amount to target by props function } */>
+      <form onSubmit={setSaving}>
         <div>
           <label htmlFor="saving"> Transfer to saving account</label>
           <input

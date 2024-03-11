@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 type Expense = {
   source: string;
@@ -6,13 +6,21 @@ type Expense = {
   date: string;
 };
 
-const Expense = () => {
+const Expense = (props: {
+  setTotalExpenses: (totalExpenses: number) => void;
+}) => {
   const [expenses, setExpenses] = useState<Expense[]>([]); // for expenses list...
   const [expense, setExpense] = useState<Expense>({
     source: "",
     amount: 0,
     date: "",
   }); // for expense object ...
+
+  useEffect(() =>
+    props.setTotalExpenses(
+      expenses.reduce((total, expense) => total + expense.amount, 0)
+    )
+  );
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     ev.preventDefault();
@@ -25,6 +33,7 @@ const Expense = () => {
   const addExpense = (ev: FormEvent<HTMLFormElement>): void => {
     ev.preventDefault();
 
+    expense.amount = Number(expense.amount);
     setExpenses((expenses) => [...expenses, expense]);
 
     setExpense({

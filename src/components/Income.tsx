@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 type Income = {
   source: string;
@@ -6,14 +6,19 @@ type Income = {
   date: string;
 };
 
-const Income = () => {
-
+const Income = (props: { setTotalIncomes: (totalIncomes: number) => void }) => {
   const [incomes, setIncomes] = useState<Income[]>([]); // for incomes list ...
   const [income, setIncome] = useState<Income>({
     source: "",
     amount: 0,
     date: "",
   }); // for income object ...
+
+  useEffect(() =>
+    props.setTotalIncomes(
+      incomes.reduce((total, income) => total + income.amount, 0)
+    )
+  );
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     ev.preventDefault();
@@ -25,7 +30,8 @@ const Income = () => {
 
   const addIncome = (ev: FormEvent<HTMLFormElement>): void => {
     ev.preventDefault();
-
+    
+    income.amount = Number(income.amount);
     setIncomes((incomes) => [...incomes, income]);
 
     setIncome({
@@ -35,7 +41,6 @@ const Income = () => {
     });
   };
 
-  console.log(incomes);
   return (
     <section>
       <form onSubmit={addIncome}>

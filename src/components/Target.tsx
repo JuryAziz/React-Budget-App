@@ -1,31 +1,32 @@
-import React, { FormEvent, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const Target = () => {
-  const [target, setTarget] = useState<any>(0);
+const Target = ( props: { savingAmount: number;  }) => {
+  const [target, setTarget] = useState(0);
+  const [saving, setSavings] = useState(0);
+
+  useEffect(() => {
+    setSavings(props.savingAmount);
+  });
+  const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
+    ev.preventDefault();
+
+    setTarget(Number(ev.target.value));
+  };
 
 
-  //   const resetTarget = (ev: FormEvent<HTMLFormElement>) => {
-  //     ev.preventDefault();
-  //     setTarget(0);
-  //   };
 
   return (
     <section>
-      <form onSubmit={(ev) => setTarget(0)}>
+      <form onSubmit={() => setTarget(0)}>
         <div>
           <label htmlFor="target"> Set target </label>
-          <input
-            value={target}
-            onChange={(ev) => setTarget(ev.target.value)}
-            id="target"
-            type="text"
-          />
+          <input value={target} onChange={onChange} id="target" type="number" />
         </div>
         <button type="submit" id="reset-btn">
           Reset
         </button>
         <div>
-          <p>Current Saving : {0}</p>
+          <p>Current Saving : {saving}</p>
           <p>Target : {target}</p>
         </div>
         {/* progress bar  */}
