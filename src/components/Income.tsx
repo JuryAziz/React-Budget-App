@@ -14,11 +14,11 @@ const Income = (props: { setTotalIncomes: (totalIncomes: number) => void }) => {
     date: "",
   }); // for income object ...
 
-  useEffect(() =>
+  useEffect(() => {
     props.setTotalIncomes(
       incomes.reduce((total, income) => total + income.amount, 0)
-    )
-  );
+    );
+  }, [incomes]);
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     ev.preventDefault();
@@ -30,7 +30,7 @@ const Income = (props: { setTotalIncomes: (totalIncomes: number) => void }) => {
 
   const addIncome = (ev: FormEvent<HTMLFormElement>): void => {
     ev.preventDefault();
-    
+
     income.amount = Number(income.amount);
     setIncomes((incomes) => [...incomes, income]);
 

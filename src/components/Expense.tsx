@@ -16,11 +16,11 @@ const Expense = (props: {
     date: "",
   }); // for expense object ...
 
-  useEffect(() =>
+  useEffect(() => {
     props.setTotalExpenses(
       expenses.reduce((total, expense) => total + expense.amount, 0)
-    )
-  );
+    );
+  }, [expenses]);
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
     ev.preventDefault();

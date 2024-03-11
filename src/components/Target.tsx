@@ -1,4 +1,5 @@
 import React, { FormEvent, useEffect, useState } from "react";
+import ProgressBar from "./ProgressBar";
 
 const Target = (props: { savingAmount: number }) => {
   const [target, setTarget] = useState(0);
@@ -32,7 +33,7 @@ const Target = (props: { savingAmount: number }) => {
           <p>Current Saving : {saving}</p>
           <p>Target : {target}</p>
         </div>
-        {/* progress bar  */}
+        <ProgressBar currentSaving={saving} targetSaving={target}/>
       </form>
     </section>
   );
