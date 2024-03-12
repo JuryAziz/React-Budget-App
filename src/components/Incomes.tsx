@@ -1,6 +1,8 @@
 import React, { FormEvent, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 type Income = {
+  id?: string;
   source: string;
   amount: number;
   date: string;
@@ -31,6 +33,7 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void }) => 
   const addIncome = (ev: FormEvent<HTMLFormElement>): void => {
     ev.preventDefault();
 
+    income.id = uuidv4();
     income.amount = Number(income.amount);
     setIncomes((incomes) => [...incomes, income]);
 
@@ -40,6 +43,11 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void }) => 
       date: "",
     });
   };
+
+  const deleteIncome = ( id: string | undefined ): void =>
+  {
+    setIncomes( incomes.filter( income => income.id !== id ) );
+  }
 
   return (
     <section>
@@ -86,7 +94,8 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void }) => 
           {incomes.map((income) => {
             return (
               <li>
-                {income.source} : {income.amount} on {income.date}
+                { income.source } : { income.amount } on { income.date }
+                <button onClick={ () => deleteIncome(income.id) }>Delete Income</button>
               </li>
             );
           })}
