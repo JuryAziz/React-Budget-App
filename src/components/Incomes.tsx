@@ -6,7 +6,7 @@ type Income = {
   date: string;
 };
 
-const Income = (props: { setTotalIncomes: (totalIncomes: number) => void }) => {
+const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void }) => {
   const [incomes, setIncomes] = useState<Income[]>([]); // for incomes list ...
   const [income, setIncome] = useState<Income>({
     source: "",
@@ -96,4 +96,4 @@ const Income = (props: { setTotalIncomes: (totalIncomes: number) => void }) => {
   );
 };
 
-export default Income;
+export default Incomes;

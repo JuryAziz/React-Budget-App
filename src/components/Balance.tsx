@@ -1,5 +1,3 @@
-
-
 import { FormEvent, useState } from "react";
 
 const Balance = (props: {
@@ -13,8 +11,9 @@ const Balance = (props: {
   };
 
   const setSaving = (ev: FormEvent<HTMLFormElement>): void => {
-      ev.preventDefault();
-      props.transferSaving(savingAmount);
+    ev.preventDefault();
+    props.transferSaving(savingAmount);
+    setSavingAmount(0);
   };
   return (
     <section>

@@ -6,7 +6,7 @@ type Expense = {
   date: string;
 };
 
-const Expense = (props: {
+const Expenses = (props: {
   setTotalExpenses: (totalExpenses: number) => void;
 }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]); // for expenses list...
@@ -98,4 +98,4 @@ const Expense = (props: {
   );
 };
 
-export default Expense;
+export default Expenses;
