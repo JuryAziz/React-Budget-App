@@ -1,6 +1,8 @@
 import React, { FormEvent, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 type Expense = {
+  id?: string;
   source: string;
   amount: number;
   date: string;
@@ -33,6 +35,7 @@ const Expenses = (props: {
   const addExpense = (ev: FormEvent<HTMLFormElement>): void => {
     ev.preventDefault();
 
+    expense.id = uuidv4();
     expense.amount = Number(expense.amount);
     setExpenses((expenses) => [...expenses, expense]);
 
@@ -43,6 +46,11 @@ const Expenses = (props: {
     });
   };
 
+
+  const deleteExpense = (id : string | undefined) : void =>
+  {
+    setExpenses(expenses.filter((expense) => expense.id !== id));
+  }
   return (
     <section>
       <form onSubmit={addExpense}>
@@ -88,7 +96,8 @@ const Expenses = (props: {
           {expenses.map((expense) => {
             return (
               <li>
-                {expense.source} : {expense.amount} on {expense.date}
+                {expense.source} : {expense.amount} on {expense.date}{" "}
+                <button onClick = {() => deleteExpense(expense.id)}> Delete Expense </button>
               </li>
             );
           })}
