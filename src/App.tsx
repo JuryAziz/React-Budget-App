@@ -1,5 +1,4 @@
-import React, { Fragment, useState } from "react";
-import logo from "./logo.svg";
+import React, { Fragment, useCallback, useState } from "react";
 import "./App.css";
 import Incomes from "./components/Incomes.tsx";
 import Expenses from "./components/Expenses.tsx";
@@ -12,17 +11,17 @@ function App() {
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [savingAmount, setSavingAmount] = useState(0);
 
-  const getTotalIncomes = (totalIncomes: number): void => {
-    setTotalIncomes(totalIncomes);
-  };
+  const getTotalIncomes = useCallback((totalIncomes: number): void => {
+    setTotalIncomes(totalIncomes)
+  }, [totalIncomes])
 
-  const getTotalExpenses = (totalExpenses: number): void => {
+  const getTotalExpenses = useCallback((totalExpenses: number): void => {
     setTotalExpenses(totalExpenses);
-  };
+  }, [totalExpenses])
 
-  const getSavingAmount = (savingAmount: number): void => {
+  const getSavingAmount = useCallback((savingAmount: number): void => {
     setSavingAmount(savingAmount);
-  };
+  }, [savingAmount])
 
 
   const calcBalance = () =>
