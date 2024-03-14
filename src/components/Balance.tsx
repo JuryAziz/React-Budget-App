@@ -1,36 +1,47 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 
-const Balance = (props: {
-  balance: number;
-  transferSaving: (amount: number) => void;
-}) => {
-  const [savingAmount, setSavingAmount] = useState(0);
+const Balance = (props: { balance: number; transferSaving: (amount: number) => void }) => {
+  const savingSchema = z.object({
+    saving: z.coerce
+      .number()
+      .positive({ message: 'saving value should be positive' })
+      .lte(props.balance, { message: "Sorry, you don't have enough balance" }),
+  });
 
-  const onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
-    setSavingAmount(Number(ev.target.value));
+  type Saving = z.infer<typeof savingSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Saving>({ resolver: zodResolver(savingSchema) });
+
+  const onSubmit: SubmitHandler<Saving> = (data: Saving): void => {
+    props.transferSaving( data.saving );
   };
 
-  const setSaving = (ev: FormEvent<HTMLFormElement>): void => {
-    ev.preventDefault();
-    props.transferSaving(savingAmount);
-    setSavingAmount(0);
-  };
   return (
     <section>
       <div>Current Balance: {props.balance}</div>
-      <form onSubmit={setSaving}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="saving"> Transfer to saving account</label>
+          <label htmlFor='saving'> Transfer to saving account</label>
           <input
-            value={savingAmount}
-            onChange={onChange}
-            id="saving"
-            type="number"
+            {...register('saving')}
+            id='saving'
+            type='number'
           />
+          {errors.saving && <p>{errors.saving.message}</p>}
         </div>
-        <button type="submit" id="transfer-btn">
+
+        <button
+          id='transfer-btn'>
           Transfer
         </button>
+
       </form>
     </section>
   );
