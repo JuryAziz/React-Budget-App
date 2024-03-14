@@ -6,12 +6,8 @@ import * as z from "zod";
 
 const incomeSchema = z.object({
   id: z.string().optional(),
-  source: z
-    .string()
-    .min(2, { message: "source must have at least 2 characters " }),
-  amount: z.coerce
-    .number()
-    .positive({ message: "amount must be a positive number" }),
+  source: z.string().min(2, { message: "source must have at least 2 characters " }),
+  amount: z.coerce.number().positive({ message: "amount must be a positive number" }),
   date: z.coerce.date({
     required_error: "Please select a date and time",
   }),
@@ -19,8 +15,7 @@ const incomeSchema = z.object({
 
 type Income = z.infer<typeof incomeSchema>;
 
-const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void;}) => {
-
+const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void }) => {
   const {
     register,
     handleSubmit,
@@ -29,12 +24,10 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void;}) => 
   const [incomes, setIncomes] = useState<Income[]>([]);
 
   useEffect(() => {
-    props.setTotalIncomes(
-      incomes.reduce((total, income) => total + income.amount, 0)
-    );
+    props.setTotalIncomes(incomes.reduce((total, income) => total + income.amount, 0));
   }, [incomes]);
 
-  const onSubmit: SubmitHandler<Income> = (data: Income) : void => {
+  const onSubmit: SubmitHandler<Income> = (data: Income): void => {
     data.id = uuidv4();
     setIncomes((incomes) => [...incomes, data]);
   };
@@ -47,38 +40,23 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void;}) => 
     <section>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="income-source"> Income source </label>
-          <input
-            {...register("source")}
-            name="source"
-            id="income-source"
-            type="text"
-          />
+          <label htmlFor='income-source'> Income source </label>
+          <input {...register("source")} name='source' id='income-source' type='text' />
           {errors.source && <p> {errors.source.message}</p>}
         </div>
         <div>
-          <label htmlFor="income-amount"> Amount of income </label>
-          <input
-            {...register("amount")}
-            name="amount"
-            id="income-amount"
-            type="string"
-          />
+          <label htmlFor='income-amount'> Amount of income </label>
+          <input {...register("amount")} name='amount' id='income-amount' type='string' />
           {errors.amount && <p> {errors.amount.message}</p>}
         </div>
 
         <div>
-          <label htmlFor="income-date"> Date of income </label>
-          <input
-            {...register("date")}
-            name="date"
-            id="income-date"
-            type="date"
-          />
+          <label htmlFor='income-date'> Date of income </label>
+          <input {...register("date")} name='date' id='income-date' type='date' />
           {errors.date && <p> {errors.date.message}</p>}
         </div>
 
-        <button type="submit" id="add-income-btn">
+        <button type='submit' id='add-income-btn'>
           Add income
         </button>
       </form>
@@ -89,9 +67,7 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void;}) => 
             return (
               <li>
                 {income.source} : {income.amount} on {income.date.toUTCString()}
-                <button onClick={() => deleteIncome(income.id)}>
-                  Delete Income
-                </button>
+                <button onClick={() => deleteIncome(income.id)}>Delete Income</button>
               </li>
             );
           })}
