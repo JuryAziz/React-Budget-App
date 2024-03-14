@@ -19,9 +19,8 @@ const incomeSchema = z.object({
 
 type Income = z.infer<typeof incomeSchema>;
 
-const Incomes = (props: {
-  setTotalIncomes: (totalIncomes: number) => void;
-}) => {
+const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void;}) => {
+
   const {
     register,
     handleSubmit,
@@ -35,7 +34,7 @@ const Incomes = (props: {
     );
   }, [incomes]);
 
-  const onSubmit: SubmitHandler<Income> = (data: Income) => {
+  const onSubmit: SubmitHandler<Income> = (data: Income) : void => {
     data.id = uuidv4();
     setIncomes((incomes) => [...incomes, data]);
   };
@@ -89,7 +88,7 @@ const Incomes = (props: {
           {incomes.map((income) => {
             return (
               <li>
-                {income.source} : {income.amount} on {income.date.toISOString()}
+                {income.source} : {income.amount} on {income.date.toUTCString()}
                 <button onClick={() => deleteIncome(income.id)}>
                   Delete Income
                 </button>
