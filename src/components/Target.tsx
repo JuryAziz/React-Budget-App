@@ -6,28 +6,37 @@ import * as z from 'zod';
 import ProgressBar from './ProgressBar';
 
 const targetSchema = z.object({
-  target: z.coerce.number().positive({ message: 'target value should be positive' }),
-} );
+  target: z.coerce.number().nonnegative({ message: 'target value should not be negative' }),
+});
 
 type TargetType = z.infer<typeof targetSchema>;
 
-const Target = (props: { savingAmount: number }) => {
-  
+const Target = (props: { savingAmount: number; setSavingAmount: (amount: number) => void }) => {
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<TargetType>({ resolver: zodResolver(targetSchema) });
 
   const [target, setTarget] = useState<number>(0);
-  const [saving, setSavings] = useState<number>(0);
+  const [savings, setSavings] = useState<number>(0);
 
+  // updating savings when a new saving is transferred.
   useEffect(() => {
-    setSavings(saving + props.savingAmount);
+    setSavings(savings + props.savingAmount);
   }, [props.savingAmount]);
 
   const onSubmit: SubmitHandler<TargetType> = (data: TargetType): void => {
     setTarget(data.target);
+    reset();
+  };
+
+  // reset current saving to 0.
+  const resetSavings = () => {
+    props.setSavingAmount(0);
+    setSavings(0);
   };
 
   return (
@@ -50,18 +59,19 @@ const Target = (props: { savingAmount: number }) => {
         </button>
 
         <button
-          onClick={() => setSavings(0)}
+          type='button'
+          onClick={resetSavings}
           id='reset-btn'>
           Reset Savings
         </button>
 
         <div>
-          <p>Current Saving : {saving}</p>
+          <p>Current Saving : {savings}</p>
           <p>Target : {target}</p>
         </div>
 
         <ProgressBar
-          currentSaving={saving}
+          currentSaving={savings}
           targetSaving={target}
         />
       </form>

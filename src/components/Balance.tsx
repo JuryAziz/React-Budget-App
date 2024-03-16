@@ -1,13 +1,14 @@
-import { FormEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const Balance = (props: { balance: number; transferSaving: (amount: number) => void }) => {
-  const savingSchema = z.object({
+
+  // the schema is declared inside to use the balance amount for validation.
+  const savingSchema = z.object( {
     saving: z.coerce
       .number()
-      .positive({ message: 'saving value should be positive' })
+      .positive({ message: 'saving value should be a positive number' })
       .lte(props.balance, { message: "Sorry, you don't have enough balance" }),
   });
 
@@ -17,10 +18,12 @@ const Balance = (props: { balance: number; transferSaving: (amount: number) => v
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Saving>({ resolver: zodResolver(savingSchema) });
 
   const onSubmit: SubmitHandler<Saving> = (data: Saving): void => {
-    props.transferSaving( data.saving );
+    props.transferSaving(data.saving);
+    reset();
   };
 
   return (
@@ -37,11 +40,7 @@ const Balance = (props: { balance: number; transferSaving: (amount: number) => v
           {errors.saving && <p>{errors.saving.message}</p>}
         </div>
 
-        <button
-          id='transfer-btn'>
-          Transfer
-        </button>
-
+        <button id='transfer-btn'>Transfer</button>
       </form>
     </section>
   );

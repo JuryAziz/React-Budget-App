@@ -1,11 +1,12 @@
-import React, { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useState } from 'react';
 
-import Incomes from "../components/Incomes.tsx";
-import Expenses from "../components/Expenses.tsx";
-import Target from "../components/Target.tsx";
-import Balance from "../components/Balance.tsx";
+import Incomes from '../components/Incomes.tsx';
+import Expenses from '../components/Expenses.tsx';
+import Target from '../components/Target.tsx';
+import Balance from '../components/Balance.tsx';
 
 function BudgetApp() {
+
   const [totalIncomes, setTotalIncomes] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [savingAmount, setSavingAmount] = useState(0);
@@ -32,14 +33,6 @@ function BudgetApp() {
   );
 
   const calcBalance = () => {
-    console.log(
-      "total income",
-      totalIncomes,
-      "total expenses",
-      totalExpenses,
-      "Saving",
-      savingAmount
-    );
     return totalIncomes - totalExpenses - savingAmount;
   };
 
@@ -47,8 +40,14 @@ function BudgetApp() {
     <Fragment>
       <Incomes setTotalIncomes={getTotalIncomes} />
       <Expenses setTotalExpenses={getTotalExpenses} />
-      <Target savingAmount={savingAmount} />
-      <Balance balance={calcBalance()} transferSaving={getSavingAmount} />
+      <Target
+        savingAmount={savingAmount}
+        setSavingAmount={getSavingAmount}
+      />
+      <Balance
+        balance={calcBalance()}
+        transferSaving={getSavingAmount}
+      />
     </Fragment>
   );
 }
