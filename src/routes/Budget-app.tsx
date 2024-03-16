@@ -1,9 +1,9 @@
 import { Fragment, useCallback, useState } from 'react';
 
-import Incomes from '../components/Incomes.tsx';
-import Expenses from '../components/Expenses.tsx';
-import Target from '../components/Target.tsx';
-import Balance from '../components/Balance.tsx';
+import Incomes from '../components/Incomes';
+import Expenses from '../components/Expenses';
+import Target from '../components/Target';
+import Balance from '../components/Balance';
 
 function BudgetApp() {
 
