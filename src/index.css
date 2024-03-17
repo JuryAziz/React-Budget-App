@@ -10,7 +10,9 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-color: #0f0f0f;
-
+  
+  min-height: 100vh;
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,9 +85,9 @@ li {
 }
 
 div {
-  margin: 0 0%;
+  margin: 2rem;
   display: grid;
-  grid-template-columns: repeat(2);
+  grid-template-columns: repeat(2, auto);
   grid-template-rows: auto;
   grid-template-areas:
     'income expense'
