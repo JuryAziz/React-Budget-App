@@ -3,9 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const Balance = (props: { balance: number; transferSaving: (amount: number) => void }) => {
-
   // the schema is declared inside to use the balance amount for validation.
-  const savingSchema = z.object( {
+  const savingSchema = z.object({
     saving: z.coerce
       .number()
       .positive({ message: 'saving value should be a positive number' })
@@ -27,17 +26,17 @@ const Balance = (props: { balance: number; transferSaving: (amount: number) => v
   };
 
   return (
-    <section>
-      <div>Current Balance: {props.balance}</div>
+    <section className='balance'>
+      <h3>Current Balance: {props.balance}</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className='input-container'>
           <label htmlFor='saving'> Transfer to saving account</label>
           <input
             {...register('saving')}
             id='saving'
             type='number'
           />
-          {errors.saving && <p>{errors.saving.message}</p>}
+          {errors.saving && <p className='error'>{errors.saving.message}</p>}
         </div>
 
         <button id='transfer-btn'>Transfer</button>

@@ -40,16 +40,16 @@ const Target = (props: { savingAmount: number; setSavingAmount: (amount: number)
   };
 
   return (
-    <section>
+    <section className='target'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className='input-container'>
           <label htmlFor='target'> Set target </label>
           <input
             {...register('target')}
             id='target'
             type='number'
           />
-          {errors.target && <p>{errors.target.message}</p>}
+          {errors.target && <p className='error'>{errors.target.message}</p>}
         </div>
 
         <button
@@ -66,8 +66,8 @@ const Target = (props: { savingAmount: number; setSavingAmount: (amount: number)
         </button>
 
         <div>
-          <p>Current Saving : {savings}</p>
-          <p>Target : {target}</p>
+          <h3>Current Saving : {savings}</h3>
+          <h3>Target : {target}</h3>
         </div>
 
         <ProgressBar

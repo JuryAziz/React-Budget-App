@@ -42,9 +42,9 @@ const Expenses = (props: { setTotalExpenses: (totalExpenses: number) => void }) 
   };
 
   return (
-    <section>
+    <section className='expense'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className='input-container'>
           <label htmlFor='expense-source'> Expense source </label>
           <input
             {...register('source')}
@@ -52,9 +52,10 @@ const Expenses = (props: { setTotalExpenses: (totalExpenses: number) => void }) 
             id='expense-source'
             type='text'
           />
-          {errors.source && <p> {errors.source.message}</p>}
+          {errors.source && <p className='error'> {errors.source.message}</p>}
         </div>
-        <div>
+
+        <div className='input-container'>
           <label htmlFor='expense-amount'> Amount of Expense </label>
           <input
             {...register('amount')}
@@ -62,10 +63,10 @@ const Expenses = (props: { setTotalExpenses: (totalExpenses: number) => void }) 
             id='expense-amount'
             type='number'
           />
-          {errors.amount && <p> {errors.amount.message}</p>}
+          {errors.amount && <p className='error'> {errors.amount.message}</p>}
         </div>
 
-        <div>
+        <div className='input-container'>
           <label htmlFor='expense-date'> Date of Expense </label>
           <input
             {...register('date')}
@@ -73,7 +74,7 @@ const Expenses = (props: { setTotalExpenses: (totalExpenses: number) => void }) 
             id='expense-date'
             type='date'
           />
-          {errors.date && <p> {errors.date.message}</p>}
+          {errors.date && <p className='error'> {errors.date.message}</p>}
         </div>
 
         <button

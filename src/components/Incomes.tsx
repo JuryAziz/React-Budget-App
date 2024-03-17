@@ -39,9 +39,9 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void }) => 
   };
 
   return (
-    <section>
+    <section className='income'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className='input-container'>
           <label htmlFor='income-source'> Income source </label>
           <input
             {...register('source')}
@@ -49,21 +49,21 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void }) => 
             id='income-source'
             type='text'
           />
-          {errors.source && <p> {errors.source.message}</p>}
+          {errors.source && <p className='error'> {errors.source.message}</p>}
         </div>
 
-        <div>
+        <div className='input-container'>
           <label htmlFor='income-amount'> Amount of income </label>
           <input
             {...register('amount')}
             name='amount'
             id='income-amount'
-            type='string'
+            type='number'
           />
-          {errors.amount && <p> {errors.amount.message}</p>}
+          {errors.amount && <p className='error'> {errors.amount.message}</p>}
         </div>
 
-        <div>
+        <div className='input-container'>
           <label htmlFor='income-date'> Date of income </label>
           <input
             {...register('date')}
@@ -71,7 +71,7 @@ const Incomes = (props: { setTotalIncomes: (totalIncomes: number) => void }) => 
             id='income-date'
             type='date'
           />
-          {errors.date && <p> {errors.date.message}</p>}
+          {errors.date && <p className='error'> {errors.date.message}</p>}
         </div>
 
         <button

@@ -2,7 +2,12 @@ import { useNavigate } from 'react-router';
 
 const Home = () => {
   const navigate = useNavigate();
-  return <button onClick={() => navigate('/budget-app')}> Home </button>;
+  return (
+    <section>
+      <h3> Welcome to J - budget tracker </h3>
+      <button onClick={() => navigate('/budget-app')}> Start tracking </button>
+    </section>
+  );
 };
 
 export default Home;
